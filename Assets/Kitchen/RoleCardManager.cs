@@ -1,14 +1,16 @@
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 using TMPro;
 
 public class RoleCardManager : MonoBehaviour
 {
     public int currentStep = 1;
-    public float timeLimit = 180f; // 3 Minuten
+    public float timeLimit = 180f;
     public float timePenalty = 30f;
     
     public TextMeshProUGUI timerText;
+    public GameObject failMessage; // NEU
     public AudioSource torvaldVoice;
     public AudioClip[] torvaldClips;
     public UnityEvent onLevelComplete;
@@ -75,13 +77,25 @@ public class RoleCardManager : MonoBehaviour
     {
         levelActive = false;
         onLevelComplete.Invoke();
-        Debug.Log("Level Complete! Die Tür öffnet sich.");
     }
     
     void LevelFailed()
     {
         levelActive = false;
+        
+        // Nachricht anzeigen
+        if (failMessage != null)
+        {
+            failMessage.SetActive(true);
+        }
+        
         onLevelFailed.Invoke();
-        Debug.Log("Level Failed! Zeit abgelaufen.");
+        StartCoroutine(ResetLevel());
+    }
+    
+    System.Collections.IEnumerator ResetLevel()
+    {
+        yield return new WaitForSeconds(3f);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
