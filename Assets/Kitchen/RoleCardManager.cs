@@ -16,7 +16,7 @@ public class RoleCardManager : MonoBehaviour
     public UnityEvent onLevelComplete;
     public UnityEvent onLevelFailed;
     
-    private float timeRemaining;
+    public float timeRemaining;
     private bool levelActive = true;
     
     void Start()
