@@ -9,8 +9,8 @@ public class RoleCardManager : MonoBehaviour
     public float timeLimit = 180f;
     public float timePenalty = 30f;
     
+    public CuttableString[] allStrings; // NEU
     public TextMeshProUGUI timerText;
-    public GameObject failMessage; // NEU
     public AudioSource torvaldVoice;
     public AudioClip[] torvaldClips;
     public UnityEvent onLevelComplete;
@@ -41,9 +41,16 @@ public class RoleCardManager : MonoBehaviour
     {
         if (timerText != null)
         {
-            int minutes = Mathf.FloorToInt(timeRemaining / 60);
-            int seconds = Mathf.FloorToInt(timeRemaining % 60);
-            timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+            if (timeRemaining <= 0)
+            {
+                timerText.text = "ENDE";
+            }
+            else
+            {
+                int minutes = Mathf.FloorToInt(timeRemaining / 60);
+                int seconds = Mathf.FloorToInt(timeRemaining % 60);
+                timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+            }
         }
     }
     
@@ -61,6 +68,19 @@ public class RoleCardManager : MonoBehaviour
     {
         timeRemaining -= timePenalty;
         PlayTorvaldVoice();
+        ResetAllCards();
+    }
+    
+    void ResetAllCards()
+    {
+        // Alle Karten zurücksetzen
+        foreach (CuttableString cs in allStrings)
+        {
+            cs.ResetCard();
+        }
+        
+        // Zurück zu Schritt 1
+        currentStep = 1;
     }
     
     void PlayTorvaldVoice()
@@ -82,13 +102,6 @@ public class RoleCardManager : MonoBehaviour
     void LevelFailed()
     {
         levelActive = false;
-        
-        // Nachricht anzeigen
-        if (failMessage != null)
-        {
-            failMessage.SetActive(true);
-        }
-        
         onLevelFailed.Invoke();
         StartCoroutine(ResetLevel());
     }

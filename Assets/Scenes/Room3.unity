@@ -966,8 +966,12 @@ MonoBehaviour:
   currentStep: 1
   timeLimit: 180
   timePenalty: 30
+  allStrings:
+  - {fileID: 2091025468}
+  - {fileID: 1239876164}
+  - {fileID: 826125414}
+  - {fileID: 105802710}
   timerText: {fileID: 1708908449}
-  failMessage: {fileID: 1187783195}
   torvaldVoice: {fileID: 0}
   torvaldClips: []
   onLevelComplete:
