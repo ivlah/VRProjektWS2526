@@ -15,6 +15,9 @@ public class CuttableString : MonoBehaviour
     private Color originalColor;
     private LineRenderer lineRenderer;
     private Transform card;
+    private Vector3 originalCardPosition;
+    private Quaternion originalCardRotation;
+    private Rigidbody cardRigidbody;
     
     void Start()
     {
@@ -22,6 +25,8 @@ public class CuttableString : MonoBehaviour
         card = transform.parent.GetComponentInChildren<MeshRenderer>().transform;
         cardRenderer = card.GetComponent<MeshRenderer>();
         originalColor = cardRenderer.material.color;
+        originalCardPosition = card.localPosition;
+        originalCardRotation = card.localRotation;
     }
     
     public void Cut(int currentStep)
@@ -30,7 +35,6 @@ public class CuttableString : MonoBehaviour
         
         if (correctOrder == currentStep)
         {
-            // Richtig geschnitten
             isCut = true;
             lineRenderer.enabled = false;
             StartCoroutine(FallCard());
@@ -38,7 +42,6 @@ public class CuttableString : MonoBehaviour
         }
         else
         {
-            // Falsch geschnitten
             StartCoroutine(WrongCutSequence());
             onWrongCut.Invoke();
         }
@@ -48,28 +51,45 @@ public class CuttableString : MonoBehaviour
     {
         isLocked = true;
         
-        // Fail Sound
         if (audioSource != null && failSound != null)
         {
             audioSource.PlayOneShot(failSound);
         }
         
-        // Karte rot färben
         cardRenderer.material.color = Color.red;
         
-        // 5 Sekunden warten
         yield return new WaitForSeconds(5f);
         
-        // Zurücksetzen
         cardRenderer.material.color = originalColor;
         isLocked = false;
     }
     
     System.Collections.IEnumerator FallCard()
     {
-        Rigidbody rb = card.gameObject.AddComponent<Rigidbody>();
-        rb.mass = 0.1f;
-        yield return new WaitForSeconds(2f);
-        card.gameObject.SetActive(false);
+        cardRigidbody = card.gameObject.AddComponent<Rigidbody>();
+        cardRigidbody.mass = 0.1f;
+        yield return null;
+    }
+    
+    public void ResetCard()
+    {
+        // Rigidbody entfernen falls vorhanden
+        if (cardRigidbody != null)
+        {
+            Destroy(cardRigidbody);
+        }
+        
+        // Karte zurücksetzen
+        card.gameObject.SetActive(true);
+        card.localPosition = originalCardPosition;
+        card.localRotation = originalCardRotation;
+        
+        // String zurücksetzen
+        lineRenderer.enabled = true;
+        isCut = false;
+        isLocked = false;
+        
+        // Farbe zurücksetzen
+        cardRenderer.material.color = originalColor;
     }
 }
