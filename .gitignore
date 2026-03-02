@@ -12,6 +12,8 @@ UserSettings/
 
 
 # IDE files
+.vs/
+.vsconfig
 *.csproj
 *.unityproj
 *.sln
@@ -26,5 +28,6 @@ UserSettings/
 *.opendb
 *.VC.db
 *.DS_Store
+Thumbs.db
 
 
