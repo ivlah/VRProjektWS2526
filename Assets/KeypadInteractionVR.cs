@@ -74,14 +74,20 @@ namespace NavKeypad
                     lineRenderer.SetPosition(1, ray.GetPoint(raycastDistance));
             }
 
-            // Beim Drücken des Triggers prüfen ob ein KeypadButton getroffen wird
+            // Beim Drücken des Triggers prüfen ob ein KeypadButton oder CabinetDoor getroffen wird
             if (triggerDown)
             {
+                Debug.Log("Trigger gedrückt!");  // ← neu
                 if (Physics.Raycast(ray, out var hit, raycastDistance, keypadLayer))
                 {
+                    Debug.Log("Raycast trifft: " + hit.collider.gameObject.name);  // ← neu
                     if (hit.collider.TryGetComponent(out KeypadButton keypadButton))
                     {
                         keypadButton.PressButton();
+                    }
+                    else if (hit.collider.GetComponentInParent<CabinetDoor>() is CabinetDoor cabinetDoor)
+                    {
+                        cabinetDoor.ToggleDoor();
                     }
                 }
             }
