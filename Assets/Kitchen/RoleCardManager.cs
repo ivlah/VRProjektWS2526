@@ -6,7 +6,7 @@ using TMPro;
 public class RoleCardManager : MonoBehaviour
 {
     public int currentStep = 1;
-    public float timeLimit = 180f;
+    public float timeLimit = 285f;
     public float timePenalty = 30f;
     
     public CuttableString[] allStrings; // NEU

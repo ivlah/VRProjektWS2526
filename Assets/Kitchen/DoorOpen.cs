@@ -8,16 +8,20 @@ public class DoorOpen : MonoBehaviour
     private bool isOpening = false;
     private Quaternion closedRotation;
     private Quaternion openRotation;
+    private BoxCollider boxCollider;
     
     void Start()
     {
         closedRotation = transform.localRotation;
         openRotation = Quaternion.Euler(0, openAngle, 0);
+        boxCollider = GetComponent<BoxCollider>();
     }
     
     public void OpenDoor()
     {
         isOpening = true;
+        if (boxCollider != null)
+            boxCollider.enabled = false; // Collider deaktivieren
     }
     
     void Update()

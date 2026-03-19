@@ -95,6 +95,10 @@ public class VRCreditsAbspann : MonoBehaviour
     void Start()
     {
         mainCam = Camera.main;
+         // Falls Camera.main null ist, Kamera vom XR Origin holen
+        if (mainCam == null && xrOrigin != null)
+        mainCam = xrOrigin.GetComponentInChildren<Camera>();
+    
         if (mainCam == null) return;
 
         ErstelleSternenfeld();

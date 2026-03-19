@@ -249,7 +249,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 794614950}
-  - component: {fileID: 794614952}
   - component: {fileID: 794614953}
   m_Layer: 0
   m_Name: CreditsCrawl
@@ -273,18 +272,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &794614952
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 794614948}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a18699663bb959848be86234fb95fb15, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &794614953
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -297,7 +284,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d66a7a75eed720a498521cb09587ec17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  xrOrigin: {fileID: 0}
+  xrOrigin: {fileID: 1508161904}
   titelFont: {fileID: 11400000, guid: 627d80291dc724440b797bbef78a9b92, type: 2}
   namenFont: {fileID: 11400000, guid: f675742eaf9c20a4f909d78ee7a14fed, type: 2}
   titelFontSize: 120
