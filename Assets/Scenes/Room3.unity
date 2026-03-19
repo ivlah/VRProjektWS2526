@@ -915,350 +915,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: -4161369568681901532, guid: 10a44c843809b3b408fa15628bf1f01c, type: 3}
---- !u!1 &165734026
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 165734028}
-  - component: {fileID: 165734029}
-  - component: {fileID: 165734030}
-  m_Layer: 0
-  m_Name: SubtitleSystem
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &165734028
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 165734026}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -2.439, y: 2.352, z: -0.297}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &165734029
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 165734026}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 37bd8cf87baf5634287ce62203692bab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  normalFont: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  specialFont: {fileID: 11400000, guid: 8583f08d08c314d309c3bdf643efc928, type: 2}
-  speakerFont: {fileID: 0}
-  normalColor:
-    r: 1
-    g: 1
-    b: 1
-    a: 1
-  specialColor:
-    r: 0.81761
-    g: 0.19911923
-    b: 0.038566407
-    a: 1
-  speakerColor:
-    r: 1
-    g: 0.8
-    b: 0.4
-    a: 1
-  bgColor:
-    r: 0
-    g: 0
-    b: 0
-    a: 0.6
-  textSize: 20
-  speakerSize: 16
-  playOnStart: 1
-  subtitles:
-  - delayBefore: 2
-    speaker: Nora
-    text: Ah!
-    duration: 1.5
-    audio: {fileID: 0}
-  - delayBefore: 0.5
-    speaker: Nora
-    text: Yes, I know. Let me go! Let me get out!
-    duration: 3.5
-    audio: {fileID: 0}
-  - delayBefore: 1
-    speaker: Nora
-    text: It is true. I have #loved you above everything else in the world.
-    duration: 4
-    audio: {fileID: 0}
-  - delayBefore: 0.5
-    speaker: Nora
-    text: '#Torvald!'
-    duration: 1.5
-    audio: {fileID: 0}
-  - delayBefore: 1
-    speaker: Nora
-    text: Let me go. You shall not suffer for my sake.
-    duration: 3.5
-    audio: {fileID: 0}
-  - delayBefore: 1
-    speaker: Torvald
-    text: Yes, now I am beginning to understand thoroughly.
-    duration: 3.5
-    audio: {fileID: 0}
-  - delayBefore: 1
-    speaker: Nora
-    text: Let me go. You shall not suffer for my sake.
-    duration: 3.5
-    audio: {fileID: 0}
-  - delayBefore: 0.8
-    speaker: Nora
-    text: I will go, it is the best for us.
-    duration: 3
-    audio: {fileID: 0}
-  - delayBefore: 1
-    speaker: Nora
-    text: I am #leaving!
-    duration: 2
-    audio: {fileID: 0}
-  - delayBefore: 1.5
-    speaker: Nora
-    text: You have never loved me. You have only thought it pleasant to be in love
-      with me.
-    duration: 5
-    audio: {fileID: 0}
-  - delayBefore: 1
-    speaker: Nora
-    text: 'I have been your doll-wife, just as at home I was papa''s doll-child;
-
-      and
-      here the children have been my dolls.'
-    duration: 6
-    audio: {fileID: 0}
-  - delayBefore: 0.5
-    speaker: Nora
-    text: 'I thought it great fun when you played with me, just as they thought it
-      great fun when I played with them.
-
-      That is what our marriage has been,
-      Torvald.'
-    duration: 7
-    audio: {fileID: 0}
-  - delayBefore: 1
-    speaker: Nora
-    text: Whose lessons? Mine, or the children's?
-    duration: 3.5
-    audio: {fileID: 0}
-  - delayBefore: 1
-    speaker: Nora
-    text: Alas, Torvald, you are not the man to educate me into being a proper wife
-      for you.
-    duration: 4.5
-    audio: {fileID: 0}
-  - delayBefore: 1
-    speaker: Nora
-    text: I must #stand quite alone.
-    duration: 3
-    audio: {fileID: 0}
-  - delayBefore: 1
-    speaker: Nora
-    text: I am going away from here now, at once.
-    duration: 3.5
-    audio: {fileID: 0}
-  - delayBefore: 1
-    speaker: Nora
-    text: 'It is no use forbidding me anything any longer.
-
-      I will take with
-      me what belongs to #myself.'
-    duration: 5
-    audio: {fileID: 0}
-  - delayBefore: 1
-    speaker: Nora
-    text: I must try and get some sense, Torvald.
-    duration: 3.5
-    audio: {fileID: 0}
-  - delayBefore: 1
-    speaker: Nora
-    text: I only know that it is necessary for me.
-    duration: 3
-    audio: {fileID: 0}
-  - delayBefore: 1
-    speaker: Nora
-    text: My most #sacred #duties?
-    duration: 3
-    audio: {fileID: 0}
-  - delayBefore: 0.8
-    speaker: Nora
-    text: I have other duties just as sacred.
-    duration: 3
-    audio: {fileID: 0}
-  - delayBefore: 1.5
-    speaker: Nora
-    text: '#Good #bye, Torvald.'
-    duration: 4
-    audio: {fileID: 0}
-  uiCanvas: {fileID: 0}
-  bgImage: {fileID: 0}
-  speakerTMP: {fileID: 0}
-  subtitleTMP: {fileID: 0}
-  audioSrc: {fileID: 0}
---- !u!114 &165734030
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 165734026}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d7169428d95c6ae45b0e4830eb4b280d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  normalFont: {fileID: 0}
-  specialFont: {fileID: 11400000, guid: 8583f08d08c314d309c3bdf643efc928, type: 2}
-  speakerFont: {fileID: 0}
-  normalColor: {r: 1, g: 1, b: 1, a: 1}
-  specialColor: {r: 0.6792453, g: 0.15906021, b: 0.11320748, a: 1}
-  speakerColor: {r: 1, g: 0.8, b: 0.4, a: 1}
-  bgColor: {r: 0, g: 0, b: 0, a: 0}
-  textSize: 18.6
-  speakerSize: 16
-  playOnStart: 1
-  subtitles:
-  - delayBefore: 2
-    speaker: Nora
-    text: Ah!
-    duration: 1.5
-    audio: {fileID: 0}
-  - delayBefore: 0.5
-    speaker: Nora
-    text: Yes, I know. Let me go! Let me get out!
-    duration: 3.5
-    audio: {fileID: 0}
-  - delayBefore: 1
-    speaker: Nora
-    text: It is true. I have #loved you above everything else in the world.
-    duration: 4
-    audio: {fileID: 0}
-  - delayBefore: 0.5
-    speaker: Nora
-    text: '#Torvald!'
-    duration: 1.5
-    audio: {fileID: 0}
-  - delayBefore: 1
-    speaker: Nora
-    text: Let me go. You shall not suffer for my sake.
-    duration: 3.5
-    audio: {fileID: 0}
-  - delayBefore: 1
-    speaker: nora
-    text: Yes, now I am beginning to understand thoroughly.
-    duration: 3.5
-    audio: {fileID: 0}
-  - delayBefore: 1
-    speaker: Nora
-    text: Let me go. You shall not suffer for my sake.
-    duration: 3.5
-    audio: {fileID: 0}
-  - delayBefore: 0.8
-    speaker: Nora
-    text: I will go, it is the best for us.
-    duration: 3
-    audio: {fileID: 0}
-  - delayBefore: 1
-    speaker: Nora
-    text: I am #leaving!
-    duration: 2
-    audio: {fileID: 0}
-  - delayBefore: 1.5
-    speaker: Nora
-    text: You have never loved me. You have only thought it pleasant to be in love
-      with me.
-    duration: 5
-    audio: {fileID: 0}
-  - delayBefore: 1
-    speaker: Nora
-    text: 'I have been your doll-wife, just as at home I was papa''s doll-child;
-
-      and
-      here the children have been my dolls.'
-    duration: 6
-    audio: {fileID: 0}
-  - delayBefore: 0.5
-    speaker: Nora
-    text: 'I thought it great fun when you played with me, just as they thought it
-      great fun when I played with them.
-
-      That is what our marriage has been,
-      Torvald.'
-    duration: 7
-    audio: {fileID: 0}
-  - delayBefore: 1
-    speaker: Nora
-    text: Whose lessons? Mine, or the children's?
-    duration: 3.5
-    audio: {fileID: 0}
-  - delayBefore: 1
-    speaker: Nora
-    text: Alas, Torvald, you are not the man to educate me into being a proper wife
-      for you.
-    duration: 4.5
-    audio: {fileID: 0}
-  - delayBefore: 1
-    speaker: Nora
-    text: I must #stand quite alone.
-    duration: 3
-    audio: {fileID: 0}
-  - delayBefore: 1
-    speaker: Nora
-    text: I am going away from here now, at once.
-    duration: 3.5
-    audio: {fileID: 0}
-  - delayBefore: 1
-    speaker: Nora
-    text: 'It is no use forbidding me anything any longer.
-
-      I will take with
-      me what belongs to #myself.'
-    duration: 5
-    audio: {fileID: 0}
-  - delayBefore: 1
-    speaker: Nora
-    text: I must try and get some sense, Torvald.
-    duration: 3.5
-    audio: {fileID: 0}
-  - delayBefore: 1
-    speaker: Nora
-    text: I only know that it is necessary for me.
-    duration: 3
-    audio: {fileID: 0}
-  - delayBefore: 1
-    speaker: Nora
-    text: My most #sacred #duties?
-    duration: 3
-    audio: {fileID: 0}
-  - delayBefore: 0.8
-    speaker: Nora
-    text: I have other duties just as sacred.
-    duration: 3
-    audio: {fileID: 0}
-  - delayBefore: 1.5
-    speaker: Nora
-    text: '#Good #bye, Torvald.'
-    duration: 4
-    audio: {fileID: 0}
 --- !u!1001 &176580382
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1520,51 +1176,6 @@ Transform:
   - {fileID: 2091025466}
   m_Father: {fileID: 1088597619}
   m_LocalEulerAnglesHint: {x: 0, y: 30, z: 0}
---- !u!1 &236688725
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 236688727}
-  - component: {fileID: 236688726}
-  m_Layer: 0
-  m_Name: DoorSpawnConroller
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &236688726
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 236688725}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e4dfbf5b08ea3242948df0e7df35dc9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  xrOrigin: {fileID: 0}
---- !u!4 &236688727
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 236688725}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -1.859, y: 1.171, z: 0.723}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &259172181
 GameObject:
   m_ObjectHideFlags: 0
@@ -3854,6 +3465,155 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -3232214542667368694, guid: c6566d987e61d4bec866fc61b480debb, type: 3}
   m_PrefabInstance: {fileID: 860150916}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &872043991
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 872043993}
+  - component: {fileID: 872043992}
+  m_Layer: 5
+  m_Name: SubtitleManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &872043992
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 872043991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fade6bde7ccbc9947be2401df74b5734, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  subtitleText: {fileID: 2023355591}
+  backgroundPanel: {fileID: 0}
+  normalFont: {fileID: 11400000, guid: 8fc650701739faf46a8e64664ec66891, type: 2}
+  highlightFont: {fileID: 11400000, guid: 8583f08d08c314d309c3bdf643efc928, type: 2}
+  normalColor: {r: 0.899371, g: 0.81301963, b: 0.4666547, a: 0.81960785}
+  highlightColor: {r: 0.95, g: 0.1, b: 0.1, a: 1}
+  highlightBold: 1
+  highlightItalic: 0
+  fadeInDuration: 0.2
+  fadeOutDuration: 0.2
+  autoPlay: 1
+  entries:
+  - label: Line 01
+    text: Ahhhh
+    startTime: 7
+    duration: 1
+  - label: Line 02
+    text: Yes, I know. Let me go. Let me get out
+    startTime: 18
+    duration: 3
+  - label: Line 03
+    text: It is true. I have #loved you above everything else in the world.
+    startTime: 30
+    duration: 3
+  - label: Line 04
+    text: '#Torvald'
+    startTime: 46
+    duration: 2
+  - label: Line 05
+    text: Yes, now I am beginning to understand thoroughly
+    startTime: 57
+    duration: 4
+  - label: Line 06
+    text: Let me go. You shall not suffer for my sake.
+    startTime: 100
+    duration: 4
+  - label: Line 07
+    text: I am sorry Torvald I most go...
+    startTime: 142
+    duration: 3
+  - label: Line 08
+    text: ' I am #leaving you'
+    startTime: 150
+    duration: 3
+  - label: Line 09
+    text: You have never loved me. You have only thought it pleasant to be in love
+      with me.
+    startTime: 158
+    duration: 3
+  - label: Line 10
+    text: I have been your doll-wife, just as at home I was papa's doll-child; and
+      here the children have been my dolls.
+    startTime: 162
+    duration: 5
+  - label: Line 11
+    text: I thought it great fun when you played with me, just as they thought it
+      great fun when I played with them. That is what our marriage has been, Torvald.
+    startTime: 168
+    duration: 6
+  - label: Line 12
+    text: Whose lessons? Mine, or the children's?
+    startTime: 0
+    duration: 1
+  - label: Line 13
+    text: Alas, Torvald, you are not the man to educate me into being a proper wife
+      for you.
+    startTime: 0
+    duration: 3
+  - label: Line 14
+    text: I must #stand quite alone.
+    startTime: 0
+    duration: 2
+  - label: Line 15
+    text: I am going away from here now, at once.
+    startTime: 0
+    duration: 2
+  - label: Line 16
+    text: It is no use forbidding me anything any longer. I will take with me what
+      belongs to #myself.
+    startTime: 0
+    duration: 3
+  - label: 48
+    text: I must try and get some sense, Torvald.
+    startTime: 0
+    duration: 2
+  - label: Line 18
+    text: I only know that it is necessary for me.
+    startTime: 0
+    duration: 2
+  - label: Line 19
+    text: My most #sacred #duties?
+    startTime: 0
+    duration: 2
+  - label: Line 20
+    text: I have other duties just as sacred.
+    startTime: 0
+    duration: 2
+  - label: Line 21
+    text: '#Good #bye, Torvald.'
+    startTime: 0
+    duration: 2
+--- !u!224 &872043993
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 872043991}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.001, y: 0.001, z: 0.001}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: NaN, y: NaN}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &891683693
 GameObject:
   m_ObjectHideFlags: 0
@@ -4143,7 +3903,7 @@ MonoBehaviour:
   m_Camera: {fileID: 653423865}
   m_OriginBaseGameObject: {fileID: 911370172}
   m_CameraFloorOffsetObject: {fileID: 1935555625}
-  m_RequestedTrackingOriginMode: 0
+  m_RequestedTrackingOriginMode: 2
   m_CameraYOffset: 1.1176
 --- !u!4 &911370178
 Transform:
@@ -4154,7 +3914,7 @@ Transform:
   m_GameObject: {fileID: 911370172}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.77}
+  m_LocalPosition: {x: 0, y: 0.38, z: 0.77}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -6474,11 +6234,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3475118261464492563, guid: 9f3369e30fbd31f4bb596b1a99babe83, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 0.173
       objectReference: {fileID: 0}
     - target: {fileID: 3475118261464492563, guid: 9f3369e30fbd31f4bb596b1a99babe83, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.008
       objectReference: {fileID: 0}
     - target: {fileID: 3475118261464492563, guid: 9f3369e30fbd31f4bb596b1a99babe83, type: 3}
       propertyPath: m_LocalPosition.z
@@ -8764,7 +8524,7 @@ Transform:
   m_GameObject: {fileID: 1935555625}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.1176, z: 0}
+  m_LocalPosition: {x: -0.313, y: 1.609, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -9560,6 +9320,140 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.2982292, y: 2.9401448, z: 1.2742411}
   m_Center: {x: 0.6458353, y: -0.12759638, z: -0.5642604}
+--- !u!1 &2023355589
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2023355590}
+  - component: {fileID: 2023355592}
+  - component: {fileID: 2023355591}
+  m_Layer: 5
+  m_Name: Text (TMP)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2023355590
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2023355589}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2088102959}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 0, y: 807}
+  m_SizeDelta: {x: 1000, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2023355591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2023355589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: 
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 70
+  m_fontSizeBase: 70
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 0
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 1024
+  m_textAlignment: 65535
+  m_characterSpacing: 10
+  m_wordSpacing: 1
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_enableWordWrapping: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 1
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!222 &2023355592
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2023355589}
+  m_CullTransparentMesh: 1
 --- !u!1001 &2044800547
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9698,6 +9592,126 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: -4161369568681901532, guid: 0ad97cd198e2d464c9d65826d41395b7, type: 3}
+--- !u!1 &2088102954
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2088102959}
+  - component: {fileID: 2088102958}
+  - component: {fileID: 2088102957}
+  - component: {fileID: 2088102956}
+  - component: {fileID: 2088102955}
+  m_Layer: 5
+  m_Name: SubtitleCanvas
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2088102955
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2088102954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22f448b9bb3c4704eafb4425e10e3638, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  vrCamera: {fileID: 653423862}
+  distance: 2
+  verticalOffset: -0.35
+  smoothing: 8
+  lockPitch: 1
+--- !u!114 &2088102956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2088102954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+--- !u!114 &2088102957
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2088102954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_UiScaleMode: 0
+  m_ReferencePixelsPerUnit: 100
+  m_ScaleFactor: 1
+  m_ReferenceResolution: {x: 800, y: 600}
+  m_ScreenMatchMode: 0
+  m_MatchWidthOrHeight: 0
+  m_PhysicalUnit: 3
+  m_FallbackScreenDPI: 96
+  m_DefaultSpriteDPI: 96
+  m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 0
+--- !u!223 &2088102958
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2088102954}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 0
+  m_Camera: {fileID: 653423865}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 0
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
+  m_AdditionalShaderChannelsFlag: 25
+  m_UpdateRectTransformForStandalone: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  m_TargetDisplay: 0
+--- !u!224 &2088102959
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2088102954}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 2023355590}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0, y: 0}
 --- !u!1 &2091025465
 GameObject:
   m_ObjectHideFlags: 0
@@ -9947,6 +9961,6 @@ SceneRoots:
   - {fileID: 1068207990}
   - {fileID: 68062090}
   - {fileID: 1576065778}
-  - {fileID: 236688727}
-  - {fileID: 165734028}
   - {fileID: 1910660626}
+  - {fileID: 872043993}
+  - {fileID: 2088102959}

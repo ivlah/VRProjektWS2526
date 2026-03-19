@@ -285,53 +285,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a18699663bb959848be86234fb95fb15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  xrOrigin: {fileID: 1508161904}
-  titelFont: {fileID: 11400000, guid: 627d80291dc724440b797bbef78a9b92, type: 2}
-  namenFont: {fileID: 11400000, guid: 8fc650701739faf46a8e64664ec66891, type: 2}
-  titelFontSize: 90
-  kategorieFontSize: 40
-  namenFontSize: 7
-  kategorieColor:
-    r: 1
-    g: 0.9117441
-    b: 0.64465404
-    a: 1
-  namenColor:
-    r: 1
-    g: 1
-    b: 1
-    a: 1
-  scrollSpeed: 50
-  canvasDistance: 4
-  starCount: 5000
-  starFieldRadius: 80
-  starSizeMin: 0.02
-  starSizeMax: 0.08
-  starColor:
-    r: 0.9
-    g: 0.92
-    b: 1
-    a: 1
-  twinkleSpeed: 1.5
-  cameraFlySpeed: 2
-  cameraRotationSpeed: 1
-  abspannMusik: {fileID: 8300000, guid: 2cd07ac583aae894f9764c7f0ec07b69, type: 3}
-  musikLautstaerke: 0.763
-  musikFadeIn: 2
-  musikFadeOut: 3
-  fadeInDuration: 3
-  mainMenuScene: MainMenu
-  sternPartikel: {fileID: 0}
-  creditsCanvas: {fileID: 0}
-  creditsContainer: {fileID: 0}
-  audioSource: {fileID: 0}
-  mainCam: {fileID: 0}
-  scrollOffset: 0
-  totalHeight: 0
-  laeuft: 0
-  beendet: 0
-  fadeTimer: 0
-  canvasGroup: {fileID: 0}
 --- !u!114 &794614953
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -344,7 +297,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d66a7a75eed720a498521cb09587ec17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  xrOrigin: {fileID: 1508161904}
+  xrOrigin: {fileID: 0}
   titelFont: {fileID: 11400000, guid: 627d80291dc724440b797bbef78a9b92, type: 2}
   namenFont: {fileID: 11400000, guid: f675742eaf9c20a4f909d78ee7a14fed, type: 2}
   titelFontSize: 120
@@ -374,17 +327,17 @@ MonoBehaviour:
 
     Ilian Vlahovic
 
-    Erik
+    Erik Strothmann
 
     Oona Yu-Mi Song
 
 
 
-    #3D Art & Design
+    #3D
+    Art & Design
 
 
-    Yannick
-    Croes
+    Yannick Croes
 
     Dodi Tschiko-Mulu
 
@@ -392,11 +345,11 @@ MonoBehaviour:
 
 
 
-    #Music & Sound
+    #Music
+    & Sound
 
 
-    Oona
-    Yu-Mi Song
+    Oona Yu-Mi Song
 
 
 
@@ -405,8 +358,8 @@ MonoBehaviour:
 
     Vincent and Salo
 
-    for Voice Acting
-    and Sound Design
+    for
+    Voice Acting and Sound Design
 
 
 
