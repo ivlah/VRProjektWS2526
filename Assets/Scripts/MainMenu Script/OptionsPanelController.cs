@@ -3,26 +3,8 @@ using UnityEngine.UI;
 using UnityEngine.Audio;
 using TMPro;
 
-/// <summary>
-/// A Doll's House — Options Panel Controller
-///
-/// Three tabs:
-///   1. Graphics   → Brightness / Gamma
-///   2. Audio      → Master Volume
-///   3. Guidance   → Meta Quest 3 user instructions
-///
-/// Setup:
-///   • Attach this script to the OptionsPanel root GameObject
-///   • Assign all fields in the Inspector (sliders, tabs, text fields)
-///   • Connect an AudioMixer with exposed parameter "MasterVolume"
-///   • Post-processing / gamma control is optional
-/// </summary>
 public class OptionsPanelController : MonoBehaviour
 {
-    // ---------------------------------------------------------------
-    // Inspector — Navigation
-    // ---------------------------------------------------------------
-
     [Header("─── Tab Buttons ────────────────────────────────")]
     [SerializeField] private Button tabGraphics;
     [SerializeField] private Button tabAudio;
@@ -35,51 +17,24 @@ public class OptionsPanelController : MonoBehaviour
     [SerializeField] private GameObject panelGuidance;
 
     [Header("─── Main Menu Reference ────────────────────────")]
-    [Tooltip("MainMenuManager reference used to call OnCloseOptions().")]
     [SerializeField] private MainMenuManager mainMenuManager;
-
-    // ---------------------------------------------------------------
-    // Inspector — Graphics Tab
-    // ---------------------------------------------------------------
 
     [Header("─── Graphics: Brightness ───────────────────────")]
     [SerializeField] private Slider sliderBrightness;
     [SerializeField] private TextMeshProUGUI labelBrightness;
-
-    [Tooltip("Minimum brightness/gamma value (0.3 = very dark).")]
     [SerializeField] private float brightnessMin = 0.3f;
-
-    [Tooltip("Maximum brightness/gamma value (2.0 = very bright).")]
     [SerializeField] private float brightnessMax = 2.0f;
-
     private const string PREF_BRIGHTNESS = "ADH_Brightness";
-
-    // ---------------------------------------------------------------
-    // Inspector — Audio Tab
-    // ---------------------------------------------------------------
 
     [Header("─── Audio: Volume ──────────────────────────────")]
     [SerializeField] private Slider sliderVolume;
     [SerializeField] private TextMeshProUGUI labelVolume;
-
-    [Tooltip("AudioMixer with exposed parameter 'MasterVolume'.")]
     [SerializeField] private AudioMixer audioMixer;
-
-    [Tooltip("Name of the exposed AudioMixer parameter.")]
     [SerializeField] private string mixerParam = "MasterVolume";
-
     private const string PREF_VOLUME = "ADH_Volume";
-
-    // ---------------------------------------------------------------
-    // Inspector — Guidance Tab
-    // ---------------------------------------------------------------
 
     [Header("─── Guidance: Scroll Content ───────────────────")]
     [SerializeField] private TextMeshProUGUI textGuidance;
-
-    // ---------------------------------------------------------------
-    // Unity Lifecycle
-    // ---------------------------------------------------------------
 
     private void Awake()
     {
@@ -88,15 +43,28 @@ public class OptionsPanelController : MonoBehaviour
         SetupGraphicsSlider();
         SetupAudioSlider();
         SetupGuidanceText();
-
-        // Open the Graphics tab by default
         ShowTab(panelGraphics);
     }
 
     private void OnEnable()
     {
-        // Load saved values whenever the options panel is opened
         LoadSettings();
+    }
+
+    // ---------------------------------------------------------------
+    // PUBLIC — für XR Simple Interactable Events im Inspector
+    // ---------------------------------------------------------------
+
+    public void OpenGraphicsTab() => ShowTab(panelGraphics);
+    public void OpenAudioTab()    => ShowTab(panelAudio);
+    public void OpenGuidanceTab() => ShowTab(panelGuidance);
+
+    public void OnBack()
+    {
+        if (mainMenuManager != null)
+            mainMenuManager.OnCloseOptions();
+        else
+            Debug.LogError("[Options] mainMenuManager is not assigned!");
     }
 
     // ---------------------------------------------------------------
@@ -106,17 +74,17 @@ public class OptionsPanelController : MonoBehaviour
     private void BindTabButtons()
     {
         if (tabGraphics != null)
-            tabGraphics.onClick.AddListener(() => ShowTab(panelGraphics));
+            tabGraphics.onClick.AddListener(OpenGraphicsTab);
         else
             Debug.LogError("[Options] tabGraphics is not assigned!");
 
         if (tabAudio != null)
-            tabAudio.onClick.AddListener(() => ShowTab(panelAudio));
+            tabAudio.onClick.AddListener(OpenAudioTab);
         else
             Debug.LogError("[Options] tabAudio is not assigned!");
 
         if (tabGuidance != null)
-            tabGuidance.onClick.AddListener(() => ShowTab(panelGuidance));
+            tabGuidance.onClick.AddListener(OpenGuidanceTab);
         else
             Debug.LogError("[Options] tabGuidance is not assigned!");
     }
@@ -132,7 +100,7 @@ public class OptionsPanelController : MonoBehaviour
     private void ShowTab(GameObject activePanel)
     {
         if (panelGraphics != null) panelGraphics.SetActive(false);
-        if (panelAudio != null) panelAudio.SetActive(false);
+        if (panelAudio    != null) panelAudio.SetActive(false);
         if (panelGuidance != null) panelGuidance.SetActive(false);
 
         if (activePanel != null)
@@ -140,7 +108,7 @@ public class OptionsPanelController : MonoBehaviour
     }
 
     // ---------------------------------------------------------------
-    // Graphics — Brightness / Gamma
+    // Graphics — Brightness
     // ---------------------------------------------------------------
 
     private void SetupGraphicsSlider()
@@ -153,9 +121,9 @@ public class OptionsPanelController : MonoBehaviour
         float saved = PlayerPrefs.GetFloat(PREF_BRIGHTNESS, 1.0f);
         sliderBrightness.value = saved;
         ApplyBrightness(saved);
+        UpdateBrightnessLabel(saved);
 
         sliderBrightness.onValueChanged.AddListener(OnBrightnessChanged);
-        UpdateBrightnessLabel(saved);
     }
 
     private void OnBrightnessChanged(float value)
@@ -171,20 +139,14 @@ public class OptionsPanelController : MonoBehaviour
 #if UNITY_ANDROID && !UNITY_EDITOR
         Screen.brightness = Mathf.InverseLerp(brightnessMin, brightnessMax, value);
 #endif
-
         Shader.SetGlobalFloat("_Gamma", value);
-
-        // Optional:
-        // If you use post-processing, you can hook your brightness exposure here.
     }
 
     private void UpdateBrightnessLabel(float value)
     {
-        if (labelBrightness != null)
-        {
-            float normalized = Mathf.InverseLerp(brightnessMin, brightnessMax, value);
-            labelBrightness.text = $"Brightness: {Mathf.RoundToInt(normalized * 100f)}%";
-        }
+        if (labelBrightness == null) return;
+        float normalized = Mathf.InverseLerp(brightnessMin, brightnessMax, value);
+        labelBrightness.text = $"Brightness: {Mathf.RoundToInt(normalized * 100f)}%";
     }
 
     // ---------------------------------------------------------------
@@ -201,9 +163,9 @@ public class OptionsPanelController : MonoBehaviour
         float saved = PlayerPrefs.GetFloat(PREF_VOLUME, 0.8f);
         sliderVolume.value = saved;
         ApplyVolume(saved);
+        UpdateVolumeLabel(saved);
 
         sliderVolume.onValueChanged.AddListener(OnVolumeChanged);
-        UpdateVolumeLabel(saved);
     }
 
     private void OnVolumeChanged(float value)
@@ -216,31 +178,24 @@ public class OptionsPanelController : MonoBehaviour
 
     private void ApplyVolume(float value)
     {
-        if (audioMixer != null)
-        {
-            float db = Mathf.Log10(Mathf.Max(value, 0.0001f)) * 20f;
-            audioMixer.SetFloat(mixerParam, db);
-        }
-        else
-        {
-            AudioListener.volume = value;
-        }
+        if (audioMixer == null) return;
+        float db = Mathf.Log10(Mathf.Max(value, 0.0001f)) * 20f;
+        audioMixer.SetFloat(mixerParam, db);
     }
 
     private void UpdateVolumeLabel(float value)
     {
-        if (labelVolume != null)
-            labelVolume.text = $"Volume: {Mathf.RoundToInt(value * 100f)}%";
+        if (labelVolume == null) return;
+        labelVolume.text = $"Volume: {Mathf.RoundToInt(value * 100f)}%";
     }
 
     // ---------------------------------------------------------------
-    // Guidance — Meta Quest 3 User Guide
+    // Guidance Text
     // ---------------------------------------------------------------
 
     private void SetupGuidanceText()
     {
         if (textGuidance == null) return;
-
         textGuidance.text =
 @"<b>Meta Quest 3 — User Guide</b>
 
@@ -251,7 +206,7 @@ Left Controller    →  Open Menu / Back
 <b>Movement in Game</b>
 Left Stick         →  Move / Walk
 Right Stick        →  Look Around / Turn
-Grip    (the button at your thumb)           →  Grab Objects
+Grip   (Thumb-Button)            →  Grab Objects
 Trigger            →  Select / Point
 
 <b>VR Comfort</b>
@@ -273,43 +228,32 @@ Thumb + index finger together → Click
 Quest button (left controller) → System menu
 
 <b>Tips</b>
-• Fully charge the headset before playing.
-• Recommended playtime: max. 45 minutes without a break.
-• If the lenses fog up: remove the headset briefly and let it air out.";
+- Fully charge the headset before playing.
+- Recommended playtime: max. 45 minutes without a break.
+- If the lenses fog up: remove the headset briefly and let it air out.
+";
     }
 
     // ---------------------------------------------------------------
-    // Load Settings
+    // Settings laden
     // ---------------------------------------------------------------
 
     private void LoadSettings()
     {
         if (sliderBrightness != null)
         {
-            float brightness = PlayerPrefs.GetFloat(PREF_BRIGHTNESS, 1.0f);
-            sliderBrightness.value = brightness;
-            ApplyBrightness(brightness);
-            UpdateBrightnessLabel(brightness);
+            float b = PlayerPrefs.GetFloat(PREF_BRIGHTNESS, 1.0f);
+            sliderBrightness.value = b;
+            ApplyBrightness(b);
+            UpdateBrightnessLabel(b);
         }
 
         if (sliderVolume != null)
         {
-            float volume = PlayerPrefs.GetFloat(PREF_VOLUME, 0.8f);
-            sliderVolume.value = volume;
-            ApplyVolume(volume);
-            UpdateVolumeLabel(volume);
+            float v = PlayerPrefs.GetFloat(PREF_VOLUME, 0.8f);
+            sliderVolume.value = v;
+            ApplyVolume(v);
+            UpdateVolumeLabel(v);
         }
-    }
-
-    // ---------------------------------------------------------------
-    // Back Button
-    // ---------------------------------------------------------------
-
-    private void OnBack()
-    {
-        if (mainMenuManager != null)
-            mainMenuManager.OnCloseOptions();
-        else
-            gameObject.SetActive(false);
     }
 }

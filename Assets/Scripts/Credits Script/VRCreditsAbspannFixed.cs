@@ -3,26 +3,6 @@ using UnityEngine.SceneManagement;
 using TMPro;
 using System.Collections;
 
-/// <summary>
-/// VR CREDITS ABSPANN (Rewritten)
-/// ===============================
-/// Robust version that works reliably on Meta Quest.
-/// 
-/// Features:
-/// - Star Wars style scrolling credits in VR
-/// - Star particle field background
-/// - Camera fly-through with rotation
-/// - Music fade in/out
-/// - Fade in from black
-/// - Auto return to main menu
-/// - Works with # markers for category headers
-///
-/// SETUP:
-/// 1. Attach to any GameObject in your credits scene
-/// 2. Drag XR Origin into "Xr Origin" slot
-/// 3. Set your fonts, colors, text in the Inspector
-/// 4. Make sure Main Camera has Tag "MainCamera"
-/// </summary>
 public class VRCreditsAbspannFixed : MonoBehaviour
 {
     [Header("VR Setup")]
@@ -113,13 +93,8 @@ public class VRCreditsAbspannFixed : MonoBehaviour
     private float fadeTimer = 0f;
     private CanvasGroup canvasGroup;
 
-    // ──────────────────────────────────────────
-    //  STARTUP — waits for camera to be ready
-    // ──────────────────────────────────────────
-
     IEnumerator Start()
     {
-        // Wait until camera is available (fixes Quest timing issue)
         mainCam = null;
         float waitTime = 0f;
         float maxWait = 5f;
@@ -140,21 +115,18 @@ public class VRCreditsAbspannFixed : MonoBehaviour
 
         if (mainCam == null)
         {
-            Debug.LogError("[VRCreditsAbspann] No camera found after waiting! Credits cannot start.");
+            Debug.LogError("[VRCreditsAbspann] No camera found! Credits cannot start.");
             yield break;
         }
 
         Debug.Log("[VRCreditsAbspann] Camera found: " + mainCam.name);
 
-        // Make sure background is black
         mainCam.clearFlags = CameraClearFlags.SolidColor;
         mainCam.backgroundColor = Color.black;
 
-        // Wait for start delay
         if (startDelay > 0f)
             yield return new WaitForSeconds(startDelay);
 
-        // Create everything
         ErstelleSternenfeld();
         ErstelleCredits();
         ErstelleMusik();
@@ -163,15 +135,11 @@ public class VRCreditsAbspannFixed : MonoBehaviour
         StartCoroutine(FadeInMusik());
     }
 
-    // ──────────────────────────────────────────
-    //  UPDATE — scroll, fade, fly
-    // ──────────────────────────────────────────
-
     void Update()
     {
         if (!laeuft || beendet) return;
 
-        // Fade in credits
+        // Fade in
         if (fadeTimer < fadeInDuration)
         {
             fadeTimer += Time.deltaTime;
@@ -179,7 +147,7 @@ public class VRCreditsAbspannFixed : MonoBehaviour
                 canvasGroup.alpha = Mathf.Clamp01(fadeTimer / fadeInDuration);
         }
 
-        // Scroll credits
+        // Scroll
         scrollOffset += scrollSpeed * Time.deltaTime;
         if (creditsContainer != null)
             creditsContainer.anchoredPosition = new Vector2(0, scrollOffset);
@@ -193,7 +161,7 @@ public class VRCreditsAbspannFixed : MonoBehaviour
         if (sternPartikel != null)
             sternPartikel.transform.position = mainCam.transform.position;
 
-        // Position canvas in front of camera
+        // Canvas vor Kamera halten — nur für WorldSpace nötig
         if (creditsCanvas != null)
         {
             creditsCanvas.transform.position = mainCam.transform.position +
@@ -201,7 +169,7 @@ public class VRCreditsAbspannFixed : MonoBehaviour
             creditsCanvas.transform.rotation = mainCam.transform.rotation;
         }
 
-        // Check if credits finished (scrolled past all text)
+        // Credits fertig?
         if (scrollOffset > totalHeight + 500f)
         {
             if (!beendet)
@@ -211,7 +179,7 @@ public class VRCreditsAbspannFixed : MonoBehaviour
             }
         }
 
-        // Also end when music stops (if music is set)
+        // Musik fertig?
         if (audioSource != null && abspannMusik != null && !audioSource.isPlaying &&
             fadeTimer > musikFadeIn + 1f)
         {
@@ -222,10 +190,6 @@ public class VRCreditsAbspannFixed : MonoBehaviour
             }
         }
     }
-
-    // ──────────────────────────────────────────
-    //  STAR FIELD
-    // ──────────────────────────────────────────
 
     void ErstelleSternenfeld()
     {
@@ -267,28 +231,22 @@ public class VRCreditsAbspannFixed : MonoBehaviour
         sternPartikel.Emit(starCount);
     }
 
-    // ──────────────────────────────────────────
-    //  CREDITS CANVAS
-    // ──────────────────────────────────────────
-
     void ErstelleCredits()
     {
-        // Create canvas
         GameObject canvasObj = new GameObject("CreditsCanvas");
         canvasObj.transform.SetParent(transform);
 
         creditsCanvas = canvasObj.AddComponent<Canvas>();
         creditsCanvas.renderMode = RenderMode.WorldSpace;
+        creditsCanvas.worldCamera = mainCam; // ← Fix für VR
 
         RectTransform canvasRect = canvasObj.GetComponent<RectTransform>();
         canvasRect.sizeDelta = new Vector2(800, 1200);
         canvasRect.localScale = Vector3.one * 0.003f;
 
-        // Canvas group for fade — START AT 0
         canvasGroup = canvasObj.AddComponent<CanvasGroup>();
         canvasGroup.alpha = 0f;
 
-        // Container that scrolls
         GameObject container = new GameObject("Container");
         container.transform.SetParent(canvasObj.transform, false);
 
@@ -299,7 +257,6 @@ public class VRCreditsAbspannFixed : MonoBehaviour
         creditsContainer.anchoredPosition = new Vector2(0, -600);
         creditsContainer.sizeDelta = new Vector2(800, 0);
 
-        // Parse credits text and create TMP elements
         string[] lines = creditsText.Split('\n');
         float yPos = 0f;
         bool isFirstLine = true;
@@ -308,7 +265,7 @@ public class VRCreditsAbspannFixed : MonoBehaviour
         {
             if (string.IsNullOrWhiteSpace(line))
             {
-                yPos -= 40f; // spacing for empty lines
+                yPos -= 40f;
                 continue;
             }
 
@@ -327,7 +284,6 @@ public class VRCreditsAbspannFixed : MonoBehaviour
 
             if (isFirstLine)
             {
-                // Main title
                 tmp.text = line;
                 tmp.font = titelFont;
                 tmp.fontSize = titelFontSize;
@@ -337,16 +293,14 @@ public class VRCreditsAbspannFixed : MonoBehaviour
             }
             else if (line.StartsWith("#"))
             {
-                // Category header
-                tmp.text = line.Substring(1); // remove #
+                tmp.text = line.Substring(1);
                 tmp.font = titelFont;
                 tmp.fontSize = kategorieFontSize;
                 tmp.color = kategorieColor;
-                yPos -= 30f; // extra space before category
+                yPos -= 30f;
             }
             else
             {
-                // Name
                 tmp.text = line;
                 tmp.font = namenFont;
                 tmp.fontSize = namenFontSize;
@@ -354,26 +308,18 @@ public class VRCreditsAbspannFixed : MonoBehaviour
             }
 
             textRect.anchoredPosition = new Vector2(0, yPos);
-
-            // Auto-size height
             tmp.ForceMeshUpdate();
             float textHeight = tmp.preferredHeight;
             textRect.sizeDelta = new Vector2(0, textHeight);
-
             yPos -= textHeight + 8f;
         }
 
         totalHeight = Mathf.Abs(yPos) + 600f;
 
-        // Position canvas in front of camera initially
         creditsCanvas.transform.position = mainCam.transform.position +
             mainCam.transform.forward * canvasDistance;
         creditsCanvas.transform.rotation = mainCam.transform.rotation;
     }
-
-    // ──────────────────────────────────────────
-    //  MUSIC
-    // ──────────────────────────────────────────
 
     void ErstelleMusik()
     {
@@ -383,7 +329,7 @@ public class VRCreditsAbspannFixed : MonoBehaviour
         audioSource.clip = abspannMusik;
         audioSource.volume = 0f;
         audioSource.loop = false;
-        audioSource.spatialBlend = 0f; // 2D music
+        audioSource.spatialBlend = 0f;
         audioSource.Play();
     }
 
@@ -416,16 +362,10 @@ public class VRCreditsAbspannFixed : MonoBehaviour
         audioSource.volume = 0f;
     }
 
-    // ──────────────────────────────────────────
-    //  END — fade out and return to menu
-    // ──────────────────────────────────────────
-
     IEnumerator AbspannEnde()
     {
-        // Fade out music
         StartCoroutine(FadeOutMusik());
 
-        // Fade out credits
         float t = 0f;
         float fadeDur = 2f;
         float startAlpha = canvasGroup != null ? canvasGroup.alpha : 1f;
@@ -438,10 +378,7 @@ public class VRCreditsAbspannFixed : MonoBehaviour
             yield return null;
         }
 
-        // Wait a moment
         yield return new WaitForSeconds(1f);
-
-        // Return to main menu
         SceneManager.LoadScene(mainMenuScene);
     }
 }

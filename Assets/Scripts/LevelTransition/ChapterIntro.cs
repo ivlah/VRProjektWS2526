@@ -2,7 +2,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections;
-using UnityEngine.XR.Interaction.Toolkit;
 
 public class ChapterIntro : MonoBehaviour
 {
@@ -21,22 +20,12 @@ public class ChapterIntro : MonoBehaviour
     private Image blackOverlay;
     private TextMeshProUGUI titleText;
     private TextMeshProUGUI subtitleText;
-
-    private ActionBasedContinuousMoveProvider moveProvider;
-    private ActionBasedContinuousTurnProvider turnProvider;
     private Camera headCam;
 
     private void Awake()
     {
         headCam = Camera.main;
         if (headCam == null) headCam = FindObjectOfType<Camera>();
-
-        moveProvider = FindObjectOfType<ActionBasedContinuousMoveProvider>();
-        turnProvider = FindObjectOfType<ActionBasedContinuousTurnProvider>();
-
-        if (moveProvider != null) moveProvider.enabled = false;
-        if (turnProvider != null) turnProvider.enabled = false;
-
         BuildUI();
     }
 
@@ -58,7 +47,6 @@ public class ChapterIntro : MonoBehaviour
         cGO.AddComponent<CanvasScaler>();
         cGO.AddComponent<GraphicRaycaster>();
 
-        // Schwarzes Overlay
         GameObject overlayGO = new GameObject("BlackOverlay");
         overlayGO.transform.SetParent(cGO.transform, false);
         blackOverlay = overlayGO.AddComponent<Image>();
@@ -68,7 +56,6 @@ public class ChapterIntro : MonoBehaviour
         oRt.anchorMax      = Vector2.one;
         oRt.offsetMin      = oRt.offsetMax = Vector2.zero;
 
-        // Titel
         GameObject titleGO = new GameObject("ChapterTitle");
         titleGO.transform.SetParent(cGO.transform, false);
         titleText           = titleGO.AddComponent<TextMeshProUGUI>();
@@ -82,7 +69,6 @@ public class ChapterIntro : MonoBehaviour
         tRt.anchorMax       = new Vector2(0.95f, 0.70f);
         tRt.offsetMin       = tRt.offsetMax = Vector2.zero;
 
-        // Subtitle
         GameObject subGO = new GameObject("ChapterSubtitle");
         subGO.transform.SetParent(cGO.transform, false);
         subtitleText           = subGO.AddComponent<TextMeshProUGUI>();
@@ -100,14 +86,10 @@ public class ChapterIntro : MonoBehaviour
     private IEnumerator PlayIntro()
     {
         yield return new WaitForSeconds(0.1f);
-
         yield return StartCoroutine(FadeTexts(0f, 1f, fadeDuration));
         yield return new WaitForSeconds(displayDuration);
         yield return StartCoroutine(FadeTexts(1f, 0f, fadeDuration));
         yield return StartCoroutine(FadeOverlay(1f, 0f, fadeDuration));
-
-        if (moveProvider != null) moveProvider.enabled = true;
-        if (turnProvider != null) turnProvider.enabled = true;
 
         Destroy(introCanvas.gameObject);
         Destroy(gameObject);

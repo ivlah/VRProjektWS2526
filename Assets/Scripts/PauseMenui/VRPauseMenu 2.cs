@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 using TMPro;
 using UnityEngine.UI;
 
+
 public class VRPauseMenu : MonoBehaviour
 {
     [Header("═══ VR Setup ═══")]
@@ -34,21 +35,14 @@ public class VRPauseMenu : MonoBehaviour
             menuButtonAction.action.Enable();
     }
 
-    void OnDestroy()
-    {
-        // nichts zu deregistrieren da wir per Update pollen
-    }
-
     void Update()
     {
-        // Escape für Desktop-Test
         if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame)
         {
             Debug.Log("[PauseMenu] Escape gedrückt");
             TogglePause();
         }
 
-        // VR Button — per Frame gepolt statt Callback
         if (menuButtonAction != null &&
             menuButtonAction.action.WasPressedThisFrame())
         {
@@ -56,7 +50,6 @@ public class VRPauseMenu : MonoBehaviour
             TogglePause();
         }
 
-        // Menu vor Kamera halten
         if (isPaused && menuCanvas != null && mainCam != null)
         {
             Vector3 forward = mainCam.transform.forward;
@@ -81,7 +74,6 @@ public class VRPauseMenu : MonoBehaviour
     void PauseGame()
     {
         isPaused = true;
-        // KEIN Time.timeScale = 0 — blockiert Input in VR!
 
         if (!menuCreated) CreateMenu();
         menuCanvas.SetActive(true);
@@ -127,29 +119,29 @@ public class VRPauseMenu : MonoBehaviour
         RectTransform panelRect = panel.GetComponent<RectTransform>();
         panelRect.anchorMin = Vector2.zero;
         panelRect.anchorMax = Vector2.one;
-        panelRect.offsetMin = Vector2.zero;
-        panelRect.offsetMax = Vector2.zero;
+        panelRect.offsetMin = panelRect.offsetMax = Vector2.zero;
 
         // Titel
         GameObject titleObj = new GameObject("Title");
         titleObj.transform.SetParent(panel.transform, false);
         TextMeshProUGUI title = titleObj.AddComponent<TextMeshProUGUI>();
-        title.text = "PAUSED";
-        title.fontSize = 42;
-        title.color = Color.white;
+        title.text      = "PAUSED";
+        title.fontSize  = 42;
+        title.color     = Color.white;
         title.alignment = TextAlignmentOptions.Center;
         title.fontStyle = FontStyles.Bold;
         RectTransform titleRect = titleObj.GetComponent<RectTransform>();
         titleRect.anchorMin = new Vector2(0, 0.7f);
         titleRect.anchorMax = new Vector2(1, 0.95f);
-        titleRect.offsetMin = Vector2.zero;
-        titleRect.offsetMax = Vector2.zero;
+        titleRect.offsetMin = titleRect.offsetMax = Vector2.zero;
 
         CreateButton(panel.transform, "Weiter spielen",
-            new Vector2(0.1f, 0.35f), new Vector2(0.9f, 0.6f), () => ResumeGame());
+            new Vector2(0.1f, 0.35f), new Vector2(0.9f, 0.6f),
+            () => ResumeGame());
 
         CreateButton(panel.transform, "Zurück zum Hauptmenü",
-            new Vector2(0.1f, 0.05f), new Vector2(0.9f, 0.3f), () => BackToMainMenu());
+            new Vector2(0.1f, 0.05f), new Vector2(0.9f, 0.3f),
+            () => BackToMainMenu());
 
         // Initial vor Kamera positionieren
         if (mainCam != null)
@@ -159,7 +151,8 @@ public class VRPauseMenu : MonoBehaviour
             if (forward.sqrMagnitude < 0.001f) forward = Vector3.forward;
             forward.Normalize();
 
-            menuCanvas.transform.position = mainCam.transform.position + forward * menuDistance;
+            menuCanvas.transform.position = mainCam.transform.position +
+                forward * menuDistance;
             menuCanvas.transform.rotation = Quaternion.LookRotation(
                 menuCanvas.transform.position - mainCam.transform.position, Vector3.up);
         }
@@ -177,29 +170,31 @@ public class VRPauseMenu : MonoBehaviour
         Button btn = btnObj.AddComponent<Button>();
         btn.onClick.AddListener(onClick);
 
+        // XR Simple Interactable — wird automatisch mit XR Interaction Manager verbunden
+        UnityEngine.XR.Interaction.Toolkit.Interactables.XRSimpleInteractable xrInteractable = btnObj.AddComponent<UnityEngine.XR.Interaction.Toolkit.Interactables.XRSimpleInteractable>();
+        xrInteractable.selectEntered.AddListener((args) => onClick());
+
         ColorBlock colors = btn.colors;
-        colors.normalColor = new Color(0.2f, 0.2f, 0.2f, 1f);
+        colors.normalColor      = new Color(0.2f, 0.2f, 0.2f, 1f);
         colors.highlightedColor = new Color(0.4f, 0.4f, 0.4f, 1f);
-        colors.pressedColor = new Color(0.1f, 0.1f, 0.1f, 1f);
+        colors.pressedColor     = new Color(0.1f, 0.1f, 0.1f, 1f);
         btn.colors = colors;
 
         RectTransform rect = btnObj.GetComponent<RectTransform>();
         rect.anchorMin = anchorMin;
         rect.anchorMax = anchorMax;
-        rect.offsetMin = Vector2.zero;
-        rect.offsetMax = Vector2.zero;
+        rect.offsetMin = rect.offsetMax = Vector2.zero;
 
         GameObject textObj = new GameObject("Label");
         textObj.transform.SetParent(btnObj.transform, false);
         TextMeshProUGUI txt = textObj.AddComponent<TextMeshProUGUI>();
-        txt.text = label;
-        txt.fontSize = 28;
-        txt.color = Color.white;
+        txt.text      = label;
+        txt.fontSize  = 28;
+        txt.color     = Color.white;
         txt.alignment = TextAlignmentOptions.Center;
         RectTransform txtRect = textObj.GetComponent<RectTransform>();
         txtRect.anchorMin = Vector2.zero;
         txtRect.anchorMax = Vector2.one;
-        txtRect.offsetMin = Vector2.zero;
-        txtRect.offsetMax = Vector2.zero;
+        txtRect.offsetMin = txtRect.offsetMax = Vector2.zero;
     }
 }
