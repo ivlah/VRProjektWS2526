@@ -7,9 +7,9 @@ using UnityEditor;
 
 /// <summary>
 /// A Doll's House — VR Menu Builder (v2)
-/// Generiert MainMenu + OptionsPanel komplett in der Szene.
+/// Generates Main Menu + Options Panel directly in the scene.
 ///
-/// Ausführen über: Tools > A Doll's House > Build VR Main Menu
+/// Run via: Tools > A Doll's House > Build VR Main Menu
 /// </summary>
 public class VRMenuBuilder : EditorWindow
 {
@@ -24,66 +24,57 @@ public class VRMenuBuilder : EditorWindow
         root.transform.position = new Vector3(0f, 1.6f, 2f);
 
         // -------------------------------------------------------
-        // Hauptmenü Canvas
+        // Main Menu Canvas
         // -------------------------------------------------------
         GameObject mainMenuGO = BuildWorldCanvas("MainMenu_Canvas", root.transform,
             width: 80f, height: 100f, scale: 0.01f, offset: Vector3.zero);
 
-        // Hintergrund
         CreateImage("BG", mainMenuGO.transform, new Color(0.03f, 0.03f, 0.09f, 0.72f), true);
 
-        // Titel
         CreateTMP("Title", mainMenuGO.transform, "A Doll's House",
             fontSize: 9f, color: new Color(0.95f, 0.88f, 0.72f, 1f), bold: true,
             anchorMin: new Vector2(0.1f, 0.78f), anchorMax: new Vector2(0.9f, 0.95f));
 
-        // Untertitel
         CreateTMP("Subtitle", mainMenuGO.transform, "— A Story Unfolds —",
             fontSize: 3.5f, color: new Color(0.75f, 0.68f, 0.55f, 0.8f), bold: false,
             anchorMin: new Vector2(0.1f, 0.70f), anchorMax: new Vector2(0.9f, 0.79f));
 
-        // Trennlinie
         CreateImage("Divider", mainMenuGO.transform, new Color(1f, 1f, 1f, 0.18f), false,
             anchorMin: new Vector2(0.1f, 0.685f), anchorMax: new Vector2(0.9f, 0.688f));
 
-        // Button Container
         GameObject btnContainer = CreateLayoutContainer("Buttons", mainMenuGO.transform,
             anchorMin: new Vector2(0.05f, 0.10f), anchorMax: new Vector2(0.95f, 0.67f));
 
         string[] labels = { "Start New Game", "Continue", "Options", "Quit" };
-        string[] names  = { "Btn_StartNewGame", "Btn_Continue", "Btn_Options", "Btn_Quit" };
+        string[] names = { "Btn_StartNewGame", "Btn_Continue", "Btn_Options", "Btn_Quit" };
         for (int i = 0; i < labels.Length; i++)
             CreateMenuButton(names[i], labels[i], btnContainer.transform);
 
-        // Footer
         CreateTMP("Footer", mainMenuGO.transform, "© 2025  A Doll's House",
             fontSize: 2.2f, color: new Color(1f, 1f, 1f, 0.22f), bold: false,
             anchorMin: new Vector2(0.05f, 0.01f), anchorMax: new Vector2(0.95f, 0.08f));
 
         // -------------------------------------------------------
-        // Options Panel Canvas (daneben, leicht versetzt)
+        // Options Panel Canvas
         // -------------------------------------------------------
         GameObject optionsGO = BuildWorldCanvas("OptionsPanel_Canvas", root.transform,
             width: 90f, height: 110f, scale: 0.01f, offset: new Vector3(0f, 0f, 0f));
-        optionsGO.SetActive(false); // Startet geschlossen
+        optionsGO.SetActive(false);
 
         BuildOptionsPanel(optionsGO);
 
         // -------------------------------------------------------
-        // MainMenuManager hinzufügen
+        // Add MainMenuManager
         // -------------------------------------------------------
-        MainMenuManager manager = root.AddComponent<MainMenuManager>();
+        root.AddComponent<MainMenuManager>();
 
-        // -------------------------------------------------------
-        // Hinweis im Log
-        // -------------------------------------------------------
         Debug.Log(
             "[VRMenuBuilder] Done!\n" +
-            "Nächste Schritte:\n" +
-            "  1. Im MainMenuManager Inspector: Buttons + OptionsPanel_Canvas zuweisen\n" +
-            "  2. Im OptionsPanelController Inspector: Sliders, Tabs, MainMenuManager zuweisen\n" +
-            "  3. 'Room1' in Build Settings eintragen\n" +
-            "  4. AutoSaveSystem Script in die Room1-Szene legen"
+            "Next steps:\n" +
+            "  1. In MainMenuManager Inspector: assign buttons + OptionsPanel_Canvas\n" +
+            "  2. In OptionsPanelController Inspector: assign sliders, tabs, MainMenuManager\n" +
+            "  3. Add 'Room1' to Build Settings\n" +
+            "  4. Place AutoSaveSystem in the Room1 scene"
         );
 
         Selection.activeGameObject = root;
@@ -91,72 +82,68 @@ public class VRMenuBuilder : EditorWindow
     }
 
     // ---------------------------------------------------------------
-    // Options Panel Aufbau
+    // Options Panel
     // ---------------------------------------------------------------
 
     private static void BuildOptionsPanel(GameObject parent)
     {
-        // Hintergrund
         CreateImage("BG", parent.transform, new Color(0.04f, 0.04f, 0.12f, 0.85f), true);
 
-        // Titel
-        CreateTMP("Title", parent.transform, "Optionen",
+        CreateTMP("Title", parent.transform, "Options",
             fontSize: 7f, color: new Color(0.95f, 0.88f, 0.72f, 1f), bold: true,
             anchorMin: new Vector2(0.05f, 0.88f), anchorMax: new Vector2(0.95f, 0.98f));
 
-        // Tab Buttons (Grafik | Audio | Anleitung)
         GameObject tabBar = CreateLayoutContainer("TabBar", parent.transform,
             anchorMin: new Vector2(0.03f, 0.79f), anchorMax: new Vector2(0.97f, 0.88f),
             vertical: false);
-        string[] tabs = { "Grafik", "Audio", "Anleitung" };
-        string[] tabNames = { "Tab_Grafik", "Tab_Audio", "Tab_Anleitung" };
+
+        string[] tabs = { "Graphics", "Audio", "Guidance" };
+        string[] tabNames = { "Tab_Graphics", "Tab_Audio", "Tab_Guidance" };
         for (int i = 0; i < tabs.Length; i++)
             CreateSmallButton(tabNames[i], tabs[i], tabBar.transform, height: 8f);
 
-        // Trennlinie
         CreateImage("TabDivider", parent.transform, new Color(1f, 1f, 1f, 0.15f), false,
             anchorMin: new Vector2(0.03f, 0.783f), anchorMax: new Vector2(0.97f, 0.786f));
 
-        // ── Panel: Grafik ────────────────────────────────────────
-        GameObject panelGrafik = CreatePanel("Panel_Grafik", parent.transform,
+        // Graphics Panel
+        GameObject panelGraphics = CreatePanel("Panel_Graphics", parent.transform,
             anchorMin: new Vector2(0.03f, 0.12f), anchorMax: new Vector2(0.97f, 0.78f));
 
-        CreateTMP("LabelHelligkeit", panelGrafik.transform, "Helligkeit: 100%",
+        CreateTMP("LabelBrightness", panelGraphics.transform, "Brightness: 100%",
             fontSize: 4f, color: new Color(0.9f, 0.85f, 0.75f, 1f), bold: false,
             anchorMin: new Vector2(0.05f, 0.80f), anchorMax: new Vector2(0.95f, 0.95f));
 
-        CreateSlider("Slider_Helligkeit", panelGrafik.transform,
+        CreateSlider("Slider_Brightness", panelGraphics.transform,
             anchorMin: new Vector2(0.05f, 0.60f), anchorMax: new Vector2(0.95f, 0.80f));
 
-        CreateTMP("HinweisGrafik", panelGrafik.transform,
-            "Passt die Bildschirmhelligkeit\nund den Gamma-Wert an.",
+        CreateTMP("HintBrightness", panelGraphics.transform,
+            "Adjust the visual brightness of the scene.",
             fontSize: 3.2f, color: new Color(0.7f, 0.65f, 0.55f, 0.8f), bold: false,
             anchorMin: new Vector2(0.05f, 0.10f), anchorMax: new Vector2(0.95f, 0.55f));
 
-        // ── Panel: Audio ─────────────────────────────────────────
+        // Audio Panel
         GameObject panelAudio = CreatePanel("Panel_Audio", parent.transform,
             anchorMin: new Vector2(0.03f, 0.12f), anchorMax: new Vector2(0.97f, 0.78f));
         panelAudio.SetActive(false);
 
-        CreateTMP("LabelLautstaerke", panelAudio.transform, "Lautstärke: 80%",
+        CreateTMP("LabelVolume", panelAudio.transform, "Volume: 80%",
             fontSize: 4f, color: new Color(0.9f, 0.85f, 0.75f, 1f), bold: false,
             anchorMin: new Vector2(0.05f, 0.80f), anchorMax: new Vector2(0.95f, 0.95f));
 
-        CreateSlider("Slider_Lautstaerke", panelAudio.transform,
+        CreateSlider("Slider_Volume", panelAudio.transform,
             anchorMin: new Vector2(0.05f, 0.60f), anchorMax: new Vector2(0.95f, 0.80f));
 
-        CreateTMP("HinweisAudio", panelAudio.transform,
-            "Master-Lautstärke für alle\nSounds im Spiel.",
+        CreateTMP("HintAudio", panelAudio.transform,
+            "Master volume for all sounds in the game.",
             fontSize: 3.2f, color: new Color(0.7f, 0.65f, 0.55f, 0.8f), bold: false,
             anchorMin: new Vector2(0.05f, 0.10f), anchorMax: new Vector2(0.95f, 0.55f));
 
-        // ── Panel: Anleitung ─────────────────────────────────────
-        GameObject panelAnleitung = CreatePanel("Panel_Anleitung", parent.transform,
+        // Guidance Panel
+        GameObject panelGuidance = CreatePanel("Panel_Guidance", parent.transform,
             anchorMin: new Vector2(0.03f, 0.12f), anchorMax: new Vector2(0.97f, 0.78f));
-        panelAnleitung.SetActive(false);
+        panelGuidance.SetActive(false);
 
-        // Scrollable Text
-        GameObject scrollView = CreateUIObject("ScrollView", panelAnleitung.transform);
+        GameObject scrollView = CreateUIObject("ScrollView", panelGuidance.transform);
         scrollView.AddComponent<ScrollRect>();
         SetAnchors(scrollView.GetComponent<RectTransform>(),
             new Vector2(0.02f, 0.02f), new Vector2(0.98f, 0.98f));
@@ -165,28 +152,28 @@ public class VRMenuBuilder : EditorWindow
         ContentSizeFitter csf = scrollContent.AddComponent<ContentSizeFitter>();
         csf.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
 
-        TextMeshProUGUI anleitungText = scrollContent.AddComponent<TextMeshProUGUI>();
-        anleitungText.fontSize = 3.0f;
-        anleitungText.color = new Color(0.85f, 0.80f, 0.70f, 1f);
-        anleitungText.text = "Anleitung wird per Script befüllt (OptionsPanelController).";
+        TextMeshProUGUI guidanceText = scrollContent.AddComponent<TextMeshProUGUI>();
+        guidanceText.fontSize = 3.0f;
+        guidanceText.color = new Color(0.85f, 0.80f, 0.70f, 1f);
+        guidanceText.text = "Guidance will be filled by script (OptionsPanelController).";
 
         ScrollRect sr = scrollView.GetComponent<ScrollRect>();
         sr.content = scrollContent.GetComponent<RectTransform>();
         sr.vertical = true;
         sr.horizontal = false;
 
-        // ── Back Button ──────────────────────────────────────────
-        CreateSmallButton("Btn_Back", "← Zurück", parent.transform,
+        // Back Button
+        CreateSmallButton("Btn_Back", "← Back", parent.transform,
             height: 9f,
             anchorMin: new Vector2(0.25f, 0.01f), anchorMax: new Vector2(0.75f, 0.10f));
 
-        // ── OptionsPanelController ───────────────────────────────
-        OptionsPanelController ctrl = parent.AddComponent<OptionsPanelController>();
-        Debug.Log("[VRMenuBuilder] OptionsPanelController hinzugefügt — bitte Felder im Inspector zuweisen.");
+        // Add controller
+        parent.AddComponent<OptionsPanelController>();
+        Debug.Log("[VRMenuBuilder] OptionsPanelController added — assign fields in the Inspector.");
     }
 
     // ---------------------------------------------------------------
-    // Helper: Canvas
+    // Helpers
     // ---------------------------------------------------------------
 
     private static GameObject BuildWorldCanvas(string name, Transform parent,
@@ -210,10 +197,6 @@ public class VRMenuBuilder : EditorWindow
 
         return go;
     }
-
-    // ---------------------------------------------------------------
-    // Helper: UI Elements
-    // ---------------------------------------------------------------
 
     private static GameObject CreateUIObject(string name, Transform parent)
     {
@@ -250,18 +233,12 @@ public class VRMenuBuilder : EditorWindow
         }
     }
 
-    private static void CreateTMP(string name, Transform parent, string text,
-        float fontSize, Color color, bool bold,
+    private static GameObject CreatePanel(string name, Transform parent,
         Vector2 anchorMin, Vector2 anchorMax)
     {
         GameObject go = CreateUIObject(name, parent);
-        TextMeshProUGUI tmp = go.AddComponent<TextMeshProUGUI>();
-        tmp.text = text;
-        tmp.fontSize = fontSize;
-        tmp.color = color;
-        tmp.alignment = TextAlignmentOptions.Center;
-        tmp.fontStyle = bold ? FontStyles.Bold : FontStyles.Normal;
         SetAnchors(go.GetComponent<RectTransform>(), anchorMin, anchorMax);
+        return go;
     }
 
     private static GameObject CreateLayoutContainer(string name, Transform parent,
@@ -273,118 +250,128 @@ public class VRMenuBuilder : EditorWindow
         if (vertical)
         {
             VerticalLayoutGroup vlg = go.AddComponent<VerticalLayoutGroup>();
-            vlg.spacing = 5f;
             vlg.childAlignment = TextAnchor.MiddleCenter;
+            vlg.spacing = 3f;
+            vlg.childControlHeight = true;
             vlg.childControlWidth = true;
-            vlg.childControlHeight = false;
-            vlg.childForceExpandWidth = true;
             vlg.childForceExpandHeight = false;
-            vlg.padding = new RectOffset(8, 8, 0, 0);
+            vlg.childForceExpandWidth = true;
         }
         else
         {
             HorizontalLayoutGroup hlg = go.AddComponent<HorizontalLayoutGroup>();
-            hlg.spacing = 4f;
             hlg.childAlignment = TextAnchor.MiddleCenter;
+            hlg.spacing = 3f;
+            hlg.childControlHeight = true;
             hlg.childControlWidth = true;
-            hlg.childControlHeight = false;
-            hlg.childForceExpandWidth = true;
             hlg.childForceExpandHeight = false;
-            hlg.padding = new RectOffset(4, 4, 0, 0);
+            hlg.childForceExpandWidth = true;
         }
+
+        ContentSizeFitter csf = go.AddComponent<ContentSizeFitter>();
+        csf.horizontalFit = ContentSizeFitter.FitMode.Unconstrained;
+        csf.verticalFit = ContentSizeFitter.FitMode.Unconstrained;
         return go;
     }
 
-    private static GameObject CreatePanel(string name, Transform parent,
+    private static GameObject CreateTMP(string name, Transform parent, string text,
+        float fontSize, Color color, bool bold,
         Vector2 anchorMin, Vector2 anchorMax)
     {
         GameObject go = CreateUIObject(name, parent);
         SetAnchors(go.GetComponent<RectTransform>(), anchorMin, anchorMax);
-        return go;
-    }
 
-    private static void CreateSlider(string name, Transform parent,
-        Vector2 anchorMin, Vector2 anchorMax)
-    {
-        GameObject go = CreateUIObject(name, parent);
-        SetAnchors(go.GetComponent<RectTransform>(), anchorMin, anchorMax);
-        go.AddComponent<Slider>();
-        // Slider-Visuals werden automatisch von Unity generiert
-        // oder du nutzt das Default Slider Prefab per Drag & Drop
-    }
-
-    private static void CreateMenuButton(string name, string label, Transform parent)
-    {
-        GameObject go = CreateUIObject(name, parent);
-        go.GetComponent<RectTransform>().sizeDelta = new Vector2(0f, 11f);
-
-        Image img = go.AddComponent<Image>();
-        img.color = new Color(1f, 1f, 1f, 0.06f);
-
-        Outline outline = go.AddComponent<Outline>();
-        outline.effectColor = new Color(1f, 1f, 1f, 0.55f);
-        outline.effectDistance = new Vector2(1f, -1f);
-
-        Button btn = go.AddComponent<Button>();
-        ColorBlock cb = btn.colors;
-        cb.normalColor      = new Color(1f, 1f, 1f, 0.06f);
-        cb.highlightedColor = new Color(1f, 1f, 1f, 0.20f);
-        cb.pressedColor     = new Color(1f, 1f, 1f, 0.32f);
-        cb.selectedColor    = new Color(1f, 1f, 1f, 0.12f);
-        cb.disabledColor    = new Color(0.5f, 0.5f, 0.5f, 0.15f);
-        cb.fadeDuration     = 0.1f;
-        btn.colors          = cb;
-        btn.targetGraphic   = img;
-
-        go.AddComponent<CanvasGroup>(); // für Alpha-Fade bei Continue
-
-        GameObject labelGo = CreateUIObject("Label", go.transform);
-        TextMeshProUGUI tmp = labelGo.AddComponent<TextMeshProUGUI>();
-        tmp.text      = label;
-        tmp.fontSize  = 4.5f;
+        TextMeshProUGUI tmp = go.AddComponent<TextMeshProUGUI>();
+        tmp.text = text;
+        tmp.fontSize = fontSize;
+        tmp.color = color;
         tmp.alignment = TextAlignmentOptions.Center;
-        tmp.color     = new Color(0.95f, 0.92f, 0.85f, 1f);
-
-        RectTransform lr = labelGo.GetComponent<RectTransform>();
-        lr.anchorMin = Vector2.zero;
-        lr.anchorMax = Vector2.one;
-        lr.offsetMin = new Vector2(4f, 1f);
-        lr.offsetMax = new Vector2(-4f, -1f);
+        if (bold) tmp.fontStyle = FontStyles.Bold;
+        tmp.enableWordWrapping = true;
+        return go;
     }
 
-    private static void CreateSmallButton(string name, string label, Transform parent,
-        float height = 8f,
+    private static GameObject CreateMenuButton(string name, string text, Transform parent)
+    {
+        return CreateSmallButton(name, text, parent, 12f);
+    }
+
+    private static GameObject CreateSmallButton(string name, string text, Transform parent,
+        float height,
         Vector2? anchorMin = null, Vector2? anchorMax = null)
     {
         GameObject go = CreateUIObject(name, parent);
-        RectTransform rt = go.GetComponent<RectTransform>();
-        rt.sizeDelta = new Vector2(0f, height);
 
         if (anchorMin.HasValue && anchorMax.HasValue)
-            SetAnchors(rt, anchorMin.Value, anchorMax.Value);
+            SetAnchors(go.GetComponent<RectTransform>(), anchorMin.Value, anchorMax.Value);
 
         Image img = go.AddComponent<Image>();
-        img.color = new Color(1f, 1f, 1f, 0.06f);
-
-        Outline outline = go.AddComponent<Outline>();
-        outline.effectColor = new Color(1f, 1f, 1f, 0.40f);
-        outline.effectDistance = new Vector2(0.8f, -0.8f);
+        img.color = new Color(0.08f, 0.08f, 0.14f, 0.92f);
 
         Button btn = go.AddComponent<Button>();
-        btn.targetGraphic = img;
+        ColorBlock cb = btn.colors;
+        cb.normalColor = new Color(0.08f, 0.08f, 0.14f, 0.92f);
+        cb.highlightedColor = new Color(0.18f, 0.18f, 0.28f, 0.98f);
+        cb.pressedColor = new Color(0.28f, 0.28f, 0.40f, 1f);
+        cb.selectedColor = cb.highlightedColor;
+        btn.colors = cb;
 
-        GameObject labelGo = CreateUIObject("Label", go.transform);
-        TextMeshProUGUI tmp = labelGo.AddComponent<TextMeshProUGUI>();
-        tmp.text = label;
-        tmp.fontSize = 3.8f;
+        Outline outline = go.AddComponent<Outline>();
+        outline.effectColor = new Color(1f, 1f, 1f, 0.18f);
+        outline.effectDistance = new Vector2(1f, -1f);
+
+        LayoutElement le = go.AddComponent<LayoutElement>();
+        le.preferredHeight = height;
+
+        GameObject label = CreateUIObject("Label", go.transform);
+        SetAnchors(label.GetComponent<RectTransform>(), Vector2.zero, Vector2.one);
+
+        TextMeshProUGUI tmp = label.AddComponent<TextMeshProUGUI>();
+        tmp.text = text;
+        tmp.fontSize = 4f;
+        tmp.color = new Color(0.95f, 0.92f, 0.82f, 1f);
         tmp.alignment = TextAlignmentOptions.Center;
-        tmp.color = new Color(0.90f, 0.86f, 0.78f, 1f);
+        tmp.fontStyle = FontStyles.Bold;
 
-        RectTransform lr = labelGo.GetComponent<RectTransform>();
-        lr.anchorMin = Vector2.zero;
-        lr.anchorMax = Vector2.one;
-        lr.offsetMin = new Vector2(2f, 0f);
-        lr.offsetMax = new Vector2(-2f, 0f);
+        return go;
+    }
+
+    private static GameObject CreateSlider(string name, Transform parent,
+        Vector2 anchorMin, Vector2 anchorMax)
+    {
+        GameObject go = CreateUIObject(name, parent);
+        SetAnchors(go.GetComponent<RectTransform>(), anchorMin, anchorMax);
+
+        Slider slider = go.AddComponent<Slider>();
+
+        GameObject bg = CreateUIObject("Background", go.transform);
+        SetAnchors(bg.GetComponent<RectTransform>(), new Vector2(0f, 0.35f), new Vector2(1f, 0.65f));
+        Image bgImg = bg.AddComponent<Image>();
+        bgImg.color = new Color(1f, 1f, 1f, 0.12f);
+
+        GameObject fillArea = CreateUIObject("Fill Area", go.transform);
+        SetAnchors(fillArea.GetComponent<RectTransform>(), new Vector2(0f, 0.35f), new Vector2(1f, 0.65f));
+
+        GameObject fill = CreateUIObject("Fill", fillArea.transform);
+        SetAnchors(fill.GetComponent<RectTransform>(), Vector2.zero, Vector2.one);
+        Image fillImg = fill.AddComponent<Image>();
+        fillImg.color = new Color(0.85f, 0.72f, 0.38f, 1f);
+
+        GameObject handleArea = CreateUIObject("Handle Slide Area", go.transform);
+        SetAnchors(handleArea.GetComponent<RectTransform>(), Vector2.zero, Vector2.one);
+
+        GameObject handle = CreateUIObject("Handle", handleArea.transform);
+        RectTransform handleRT = handle.GetComponent<RectTransform>();
+        handleRT.sizeDelta = new Vector2(6f, 12f);
+        Image handleImg = handle.AddComponent<Image>();
+        handleImg.color = new Color(0.98f, 0.95f, 0.88f, 1f);
+
+        slider.fillRect = fill.GetComponent<RectTransform>();
+        slider.handleRect = handleRT;
+        slider.targetGraphic = handleImg;
+        slider.direction = Slider.Direction.LeftToRight;
+
+        return go;
     }
 }
 #endif

@@ -5,10 +5,10 @@ using UnityEngine.SceneManagement;
 /// <summary>
 /// A Doll's House — VR Main Menu Manager (v2)
 ///
-/// • Start New Game  → löscht AutoSave, lädt "Room1"
-/// • Continue        → lädt die zuletzt gespeicherte Szene (AutoSaveSystem)
-/// • Options         → öffnet OptionsPanel, blendet Hauptmenü aus
-/// • Quit            → beendet die App sofort (Quest 3 + Editor)
+/// • Start New Game  → deletes AutoSave and loads "Room1"
+/// • Continue        → loads the most recently saved scene (AutoSaveSystem)
+/// • Options         → opens the options panel and hides the main menu
+/// • Quit            → exits the app immediately (Quest 3 + Editor)
 ///
 /// Attach to: MainMenu Root GameObject (World Space Canvas Parent)
 /// </summary>
@@ -18,12 +18,12 @@ public class MainMenuManager : MonoBehaviour
     // Inspector
     // ---------------------------------------------------------------
 
-    [Header("Szenen")]
-    [Tooltip("Szenenname für Room 1. Muss in Build Settings eingetragen sein.")]
+    [Header("Scenes")]
+    [Tooltip("Scene name for Room 1. Must be added to Build Settings.")]
     [SerializeField] private string room1SceneName = "Room1";
 
     [Header("Canvas")]
-    [Tooltip("Der Canvas des Hauptmenüs (wird ausgeblendet wenn Options offen ist).")]
+    [Tooltip("Main menu canvas (hidden when the options panel is open).")]
     [SerializeField] private Canvas mainMenuCanvas;
 
     [Header("Buttons")]
@@ -33,7 +33,7 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] private Button btnQuit;
 
     [Header("Options Panel")]
-    [Tooltip("Das OptionsPanel GameObject. Wird per Script ein-/ausgeblendet.")]
+    [Tooltip("Options panel GameObject that is shown/hidden by script.")]
     [SerializeField] private GameObject optionsPanel;
 
     // ---------------------------------------------------------------
@@ -46,13 +46,12 @@ public class MainMenuManager : MonoBehaviour
         BindButtons();
         RefreshContinueButton();
 
-        // Sicherstellen dass Options beim Start geschlossen ist
         if (optionsPanel != null)
             optionsPanel.SetActive(false);
     }
 
     // ---------------------------------------------------------------
-    // Initialisierung
+    // Initialization
     // ---------------------------------------------------------------
 
     private void ValidateCanvas()
@@ -62,7 +61,7 @@ public class MainMenuManager : MonoBehaviour
 
         if (mainMenuCanvas != null && mainMenuCanvas.renderMode != RenderMode.WorldSpace)
         {
-            Debug.LogWarning("[MainMenu] Canvas RenderMode wird auf WorldSpace korrigiert.");
+            Debug.LogWarning("[MainMenu] Canvas RenderMode is being corrected to WorldSpace.");
             mainMenuCanvas.renderMode = RenderMode.WorldSpace;
         }
     }
@@ -70,9 +69,9 @@ public class MainMenuManager : MonoBehaviour
     private void BindButtons()
     {
         Bind(btnStartNewGame, OnStartNewGame, nameof(btnStartNewGame));
-        Bind(btnContinue,     OnContinue,     nameof(btnContinue));
-        Bind(btnOptions,      OnOptions,      nameof(btnOptions));
-        Bind(btnQuit,         OnQuit,         nameof(btnQuit));
+        Bind(btnContinue, OnContinue, nameof(btnContinue));
+        Bind(btnOptions, OnOptions, nameof(btnOptions));
+        Bind(btnQuit, OnQuit, nameof(btnQuit));
     }
 
     private static void Bind(Button btn, UnityEngine.Events.UnityAction action, string label)
@@ -80,11 +79,11 @@ public class MainMenuManager : MonoBehaviour
         if (btn != null)
             btn.onClick.AddListener(action);
         else
-            Debug.LogError($"[MainMenu] Button '{label}' ist nicht im Inspector zugewiesen!");
+            Debug.LogError($"[MainMenu] Button '{label}' is not assigned in the Inspector!");
     }
 
     /// <summary>
-    /// Continue-Button nur anklickbar wenn ein AutoSave existiert.
+    /// Continue button should only be interactable if an autosave exists.
     /// </summary>
     public void RefreshContinueButton()
     {
@@ -99,10 +98,10 @@ public class MainMenuManager : MonoBehaviour
     }
 
     // ---------------------------------------------------------------
-    // Button Handler
+    // Button Handlers
     // ---------------------------------------------------------------
 
-    /// <summary>Start New Game: AutoSave löschen → Room1 laden.</summary>
+    /// <summary>Start New Game: delete AutoSave and load Room1.</summary>
     public void OnStartNewGame()
     {
         Debug.Log("[MainMenu] → Start New Game (Room1)");
@@ -110,75 +109,77 @@ public class MainMenuManager : MonoBehaviour
         LoadScene(room1SceneName);
     }
 
-    /// <summary>Continue: gespeicherte Szene aus dem AutoSave laden.</summary>
+    /// <summary>Continue from the last saved scene.</summary>
     public void OnContinue()
     {
-        string savedScene = AutoSaveSystem.GetSavedScene();
-
-        if (string.IsNullOrEmpty(savedScene))
+        if (!AutoSaveSystem.HasSave())
         {
-            Debug.LogWarning("[MainMenu] Kein AutoSave gefunden — Continue ignoriert.");
+            Debug.LogWarning("[MainMenu] No save found — Continue cancelled.");
+            RefreshContinueButton();
             return;
         }
 
-        Debug.Log($"[MainMenu] → Continue: Lade '{savedScene}'");
-        LoadScene(savedScene);
+        string sceneToLoad = AutoSaveSystem.GetSavedScene();
+        Debug.Log($"[MainMenu] → Continue ({sceneToLoad})");
+        LoadScene(sceneToLoad);
     }
 
-    /// <summary>Options: Hauptmenü ausblenden, Options Panel öffnen.</summary>
+    /// <summary>Open the options panel and hide the main menu canvas.</summary>
     public void OnOptions()
     {
-        if (optionsPanel == null)
-        {
-            Debug.LogError("[MainMenu] optionsPanel ist nicht zugewiesen!");
-            return;
-        }
+        Debug.Log("[MainMenu] → Open Options");
 
-        bool nowOpen = !optionsPanel.activeSelf;
-        optionsPanel.SetActive(nowOpen);
+        if (optionsPanel != null)
+            optionsPanel.SetActive(true);
 
         if (mainMenuCanvas != null)
-            mainMenuCanvas.gameObject.SetActive(!nowOpen);
-
-        Debug.Log($"[MainMenu] Options Panel: {(nowOpen ? "geöffnet" : "geschlossen")}");
+            mainMenuCanvas.gameObject.SetActive(false);
     }
 
-    /// <summary>
-    /// Schließt das Options Panel und zeigt das Hauptmenü wieder.
-    /// Aufruf durch den Back-Button im OptionsPanel.
-    /// </summary>
+    /// <summary>Called by OptionsPanelController when leaving the options panel.</summary>
     public void OnCloseOptions()
     {
+        Debug.Log("[MainMenu] ← Close Options");
+
         if (optionsPanel != null)
             optionsPanel.SetActive(false);
 
         if (mainMenuCanvas != null)
             mainMenuCanvas.gameObject.SetActive(true);
+
+        RefreshContinueButton();
     }
 
-    /// <summary>Quit: App sofort beenden — funktioniert auf Meta Quest 3.</summary>
+    /// <summary>Quit app (or stop Play Mode in the editor).</summary>
     public void OnQuit()
     {
-        Debug.Log("[MainMenu] → Quit");
+        Debug.Log("[MainMenu] → Quit Game");
 
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #else
-        Application.Quit(0);
+        Application.Quit();
 #endif
     }
 
     // ---------------------------------------------------------------
-    // Utility
+    // Scene Loading Helper
     // ---------------------------------------------------------------
 
-    private static void LoadScene(string sceneName)
+    private void LoadScene(string sceneName)
     {
-        if (string.IsNullOrEmpty(sceneName))
+        if (string.IsNullOrWhiteSpace(sceneName))
         {
-            Debug.LogError("[MainMenu] Szenenname ist leer!");
+            Debug.LogError("[MainMenu] Scene name is empty!");
             return;
         }
+
+        if (!Application.CanStreamedLevelBeLoaded(sceneName))
+        {
+            Debug.LogError($"[MainMenu] Scene '{sceneName}' is not in Build Settings!");
+            return;
+        }
+
         SceneManager.LoadScene(sceneName);
     }
 }

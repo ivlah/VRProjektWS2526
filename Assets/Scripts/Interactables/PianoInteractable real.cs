@@ -1,19 +1,8 @@
 using UnityEngine;
-using UnityEngine.XR;
+using UnityEngine.XR.Interaction.Toolkit;
 
-/// <summary>
-/// A Doll's House — Piano Interactable (v4)
-/// Spielt wenn Trigger-Button gedrückt wird während man auf das Klavier zeigt.
-/// Nutzt direkten XR Input — kein Collider Trigger nötig.
-///
-/// SETUP:
-///   1. Box Collider auf dem Klavier → Is Trigger ✓
-///   2. Audio Source auf dem Klavier
-///   3. Dieses Script dranhängen
-///   4. Piano Clip reinziehen
-///   5. Background Music Source → MusicController Audio Source reinziehen
-/// </summary>
 [RequireComponent(typeof(AudioSource))]
+[RequireComponent(typeof(UnityEngine.XR.Interaction.Toolkit.Interactables.XRSimpleInteractable))]
 public class PianoInteractable : MonoBehaviour
 {
     [Header("Klavier Sound")]
@@ -25,18 +14,8 @@ public class PianoInteractable : MonoBehaviour
     [Header("Hintergrundmusik")]
     [SerializeField] private AudioSource backgroundMusicSource;
 
-    // ---------------------------------------------------------------
-
     private AudioSource pianoAudio;
     private bool isPlaying = false;
-    private bool controllerInside = false;
-
-    // XR Input Devices
-    private InputDevice rightController;
-    private InputDevice leftController;
-    private bool wasPressed = false;
-
-    // ---------------------------------------------------------------
 
     private void Start()
     {
@@ -52,62 +31,35 @@ public class PianoInteractable : MonoBehaviour
             if (musicObj != null)
                 backgroundMusicSource = musicObj.GetComponent<AudioSource>();
         }
+
+        UnityEngine.XR.Interaction.Toolkit.Interactables.XRSimpleInteractable interactable = GetComponent<UnityEngine.XR.Interaction.Toolkit.Interactables.XRSimpleInteractable>();
+        interactable.selectEntered.AddListener(OnSelected);
+        interactable.activated.AddListener(OnActivated);
     }
 
-    private void Update()
+    private void OnSelected(SelectEnterEventArgs args)
     {
-        if (isPlaying) return;
-
-        // Controller bei Bedarf neu suchen
-        if (!rightController.isValid)
-            rightController = InputDevices.GetDeviceAtXRNode(XRNode.RightHand);
-        if (!leftController.isValid)
-            leftController = InputDevices.GetDeviceAtXRNode(XRNode.LeftHand);
-
-        // Trigger ODER Grip auf beiden Controllern prüfen
-        bool pressed = IsPressed(rightController) || IsPressed(leftController);
-
-        // Nur beim ersten Drücken auslösen (kein Dauerfeuer)
-        if (pressed && !wasPressed && controllerInside)
+        Debug.Log("[Piano] OnSelected gefeuert");
+        if (!isPlaying)
             StartCoroutine(PlayAndResume());
-
-        wasPressed = pressed;
     }
 
-    private bool IsPressed(InputDevice device)
+    private void OnActivated(ActivateEventArgs args)
     {
-        if (!device.isValid) return false;
-
-        // Trigger Button
-        device.TryGetFeatureValue(CommonUsages.triggerButton, out bool trigger);
-        // Grip Button
-        device.TryGetFeatureValue(CommonUsages.gripButton, out bool grip);
-        // Primary Button (A/X)
-        device.TryGetFeatureValue(CommonUsages.primaryButton, out bool primary);
-        // Secondary Button (B/Y)
-        device.TryGetFeatureValue(CommonUsages.secondaryButton, out bool secondary);
-
-        return trigger || grip || primary || secondary;
+        Debug.Log("[Piano] OnActivated gefeuert");
+        if (!isPlaying)
+            StartCoroutine(PlayAndResume());
     }
 
-    // ---------------------------------------------------------------
-    // Collider Trigger
-    // ---------------------------------------------------------------
-
-    private void OnTriggerEnter(Collider other)
+    private void OnDestroy()
     {
-        controllerInside = true;
-        Debug.Log($"[Piano] Controller erkannt: {other.name}");
+        UnityEngine.XR.Interaction.Toolkit.Interactables.XRSimpleInteractable interactable = GetComponent<UnityEngine.XR.Interaction.Toolkit.Interactables.XRSimpleInteractable>();
+        if (interactable != null)
+        {
+            interactable.selectEntered.RemoveListener(OnSelected);
+            interactable.activated.RemoveListener(OnActivated);
+        }
     }
-
-    private void OnTriggerExit(Collider other)
-    {
-        controllerInside = false;
-    }
-
-    // ---------------------------------------------------------------
-    // Pause → Play → Resume
-    // ---------------------------------------------------------------
 
     private System.Collections.IEnumerator PlayAndResume()
     {

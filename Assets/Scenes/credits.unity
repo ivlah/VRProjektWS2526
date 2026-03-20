@@ -139,7 +139,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!108 &263886189
 Light:
   m_ObjectHideFlags: 0
@@ -249,7 +249,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 794614950}
-  - component: {fileID: 794614953}
+  - component: {fileID: 794614954}
   m_Layer: 0
   m_Name: CreditsCrawl
   m_TagString: Untagged
@@ -272,7 +272,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &794614953
+--- !u!114 &794614954
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -281,19 +281,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 794614948}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d66a7a75eed720a498521cb09587ec17, type: 3}
+  m_Script: {fileID: 11500000, guid: df2de08100ae36b4db90610eb262811f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  xrOrigin: {fileID: 1508161904}
+  xrOrigin: {fileID: 1905010333}
   titelFont: {fileID: 11400000, guid: 627d80291dc724440b797bbef78a9b92, type: 2}
-  namenFont: {fileID: 11400000, guid: f675742eaf9c20a4f909d78ee7a14fed, type: 2}
-  titelFontSize: 120
-  kategorieFontSize: 70
-  namenFontSize: 40
-  kategorieColor: {r: 1, g: 0.9179923, b: 0.66981125, a: 1}
+  namenFont: {fileID: 11400000, guid: 8fc650701739faf46a8e64664ec66891, type: 2}
+  titelFontSize: 100
+  kategorieFontSize: 80
+  namenFontSize: 60
+  kategorieColor: {r: 1, g: 0.85, b: 0.4, a: 1}
   namenColor: {r: 1, g: 1, b: 1, a: 1}
   creditsText: 'A Doll''s House
-
 
 
 
@@ -303,7 +302,6 @@ MonoBehaviour:
     Harnoor Multani
 
     Dodi Tschiko-Mulu
-
 
 
     #Programming
@@ -319,7 +317,6 @@ MonoBehaviour:
     Oona Yu-Mi Song
 
 
-
     #3D
     Art & Design
 
@@ -331,7 +328,6 @@ MonoBehaviour:
     Harnoor Multani
 
 
-
     #Music
     & Sound
 
@@ -339,8 +335,7 @@ MonoBehaviour:
     Oona Yu-Mi Song
 
 
-
-    #Special Thanks to
+    #Special Thank''s to
 
 
     Vincent and Salo
@@ -351,9 +346,8 @@ MonoBehaviour:
 
 
 
-
-    #Thanks for playing our Game'
-  scrollSpeed: 70
+    #Thank You for playing our Game'
+  scrollSpeed: 60
   canvasDistance: 4
   startDelay: 0.5
   starCount: 5000
@@ -365,8 +359,8 @@ MonoBehaviour:
   cameraFlySpeed: 1.5
   cameraRotationSpeed: 1
   abspannMusik: {fileID: 8300000, guid: 2cd07ac583aae894f9764c7f0ec07b69, type: 3}
-  musikLautstaerke: 0.754
-  musikFadeIn: 0
+  musikLautstaerke: 0.8
+  musikFadeIn: 2
   musikFadeOut: 3
   fadeInDuration: 2
   mainMenuScene: MainMenu
